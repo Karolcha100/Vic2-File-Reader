@@ -1,5 +1,19 @@
+from abc import ABC, abstractmethod
+
 from name_statements import Equation, ListOfEquations
 
+
+
+
+
+
+class Condition(ABC):
+    def __init__(self) -> None:
+        pass
+
+    @abstractmethod
+    def evaluate(self) -> str|list:
+        pass
 
 
 
