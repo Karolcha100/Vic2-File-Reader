@@ -67,10 +67,6 @@ class BlockDType(NameStatement):
 
 
 
-class NoNameStatements(ABC):
-    def __init__(self) -> None:
-        pass
-
 
 
 class GroupPopModifier:
@@ -81,41 +77,3 @@ class PopModifier:
     def __init__(self) -> None:
         self.factor: float
         self.content: BoolAND
-
-class LimitStatement:
-    def __init__(self) -> None:
-        self.content: BoolAND
-
-
-
-
-class BooleanStatements(ABC):
-    def __init__(self) -> None:
-        pass
-
-    @abstractmethod
-    def get_my_type(self) -> str:
-        pass
-
-
-
-class BoolAND(BooleanStatements):
-    def __init__(self) -> None:
-        self.content: list[BooleanStatements|Scope|Condition] = []
-
-    def get_my_type(self) -> str:
-        return "AND"
-    
-class BoolOR(BooleanStatements):
-    def __init__(self) -> None:
-        self.content: list[BooleanStatements|Scope|Condition] = []
-
-    def get_my_type(self) -> str:
-        return "OR"
-    
-class BoolNOT(BooleanStatements):
-    def __init__(self) -> None:
-        self.content: list[BooleanStatements|Scope|Condition] = []
-
-    def get_my_type(self) -> str:
-        return "NOT"
