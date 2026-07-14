@@ -1,5 +1,6 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
+from typing.types_basic import BasicType
 
 
 
@@ -43,11 +44,11 @@ class Equation(NameStatement):
     :param value: Value assigned to Statement
     :type value: str
     """
-    def __init__(self, name: str, value: str) -> None:
+    def __init__(self, name: str, value: BasicType) -> None:
         super().__init__(name)
-        self._value: str = value
+        self._value: BasicType = value
     
-    def get_value(self) -> str:
+    def get_value(self) -> BasicType:
         """
         Returns Value, stored in Equation.
 

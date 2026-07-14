@@ -11,10 +11,6 @@ class Condition(ABC):
     def __init__(self) -> None:
         pass
 
-    @abstractmethod
-    def evaluate(self) -> str|list:
-        pass
-
 
 
 
