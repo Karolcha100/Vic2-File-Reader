@@ -56,6 +56,15 @@ class Equation(NameStatement):
         :rtype: str
         """
         return self._value
+    
+    def set_value(self, value: BasicType) -> None:
+        """
+        Sets Value stored in Equation.
+
+        :param value: Value to set
+        :type value: BasicType
+        """
+        self._value = value
 
 
 class ListOfEquations(NameStatement):
@@ -88,5 +97,25 @@ class ListOfEquations(NameStatement):
         super().__init__(name)
         self._equations: list[Equation] = equations
     
-    def get_my_values(self) -> list[Equation]:
+    def get_values(self) -> list[Equation]:
+        """
+        Returns Names mapped to Values, in stored Equations.
+
+        :return: List of Equations
+        :rtype: list[Equation]
+        """
         return self._equations
+    
+    def set_value(self, name: str, value: BasicType) -> None:
+        """
+        Sets Value stored in Equation.
+
+        :param value: Value to set
+        :type value: BasicType
+        """
+        for i, equation in enumerate(self._equations):
+            if equation.get_name() == name:
+                self._equations[i].set_value(value)
+                break
+
+        raise ValueError(f"name = {name}, not in Equations")
