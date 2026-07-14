@@ -42,7 +42,7 @@ class Equation(NameStatement):
     :type name: str
 
     :param value: Value assigned to Statement
-    :type value: str
+    :type value: BasicType
     """
     def __init__(self, name: str, value: BasicType) -> None:
         super().__init__(name)

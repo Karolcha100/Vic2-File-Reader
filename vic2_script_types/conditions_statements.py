@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 from name_statements import Equation, ListOfEquations
+from typing.types_basic import BasicType
 
 
 
@@ -28,9 +29,9 @@ class ConditionEquation(Equation):
     :type name: str
 
     :param value: Value assigned to Condition
-    :type value: str
+    :type value: BasicType
     """
-    def __init__(self, name: str, value: str) -> None:
+    def __init__(self, name: str, value: BasicType) -> None:
         super().__init__(name, value)
     
 

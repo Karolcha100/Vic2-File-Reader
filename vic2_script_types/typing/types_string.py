@@ -14,7 +14,7 @@ class BoolType(StringType):
     :type raw_value: str
     """
 
-    _type_name: ClassVar[str] = "[bool]"
+    _type_name: ClassVar[str] = "[yes/no]"
     
     def __init__(self, raw_value: str) -> None:
         super().__init__(raw_value)
@@ -42,7 +42,7 @@ class PopType(StringType):
     :type raw_value: str
     """
 
-    _type_name: ClassVar[str] = "[pop type]"
+    _type_name: ClassVar[str] = "[poptype]"
 
     def __init__(self, raw_value: str) -> None:
         super().__init__(raw_value)
