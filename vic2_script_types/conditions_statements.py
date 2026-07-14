@@ -9,14 +9,18 @@ from typing.types_basic import BasicType
 
 
 class Condition(ABC):
-    def __init__(self) -> None:
-        pass
+    """
+    Abstract Condition Statement.
+    """
+    
+    @abstractmethod
+    def get_values(self) -> list[]
 
 
 
 
 
-class ConditionEquation(Equation):
+class ConditionEquation(Equation, Condition):
     """
     Condition in form of Equation.
 
@@ -35,7 +39,7 @@ class ConditionEquation(Equation):
         super().__init__(name, value)
     
 
-class ConditionWithArguments(ListOfEquations):
+class ConditionWithArguments(ListOfEquations, Condition):
     """
     Condition in form of List of Equations.
 
