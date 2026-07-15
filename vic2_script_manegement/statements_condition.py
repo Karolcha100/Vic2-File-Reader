@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from vic2_script_types.statements_name import Equation, ListOfEquations
+from statements_name import Equation, ListOfEquations
 from typing.types_basic import BasicType
 
 
