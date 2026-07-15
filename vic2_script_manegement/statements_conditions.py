@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from name_statements import Equation, ListOfEquations
+from vic2_script_types.statements_name import Equation, ListOfEquations
 from typing.types_basic import BasicType
 
 
@@ -39,6 +39,16 @@ class Condition(ABC):
 
         :param value: Value to set
         :type value: BasicType
+        """
+        ...
+
+    @abstractmethod
+    def evaluate(self) -> bool:
+        """
+        Checks if Condition is Met.
+
+        :return: If condition is met.
+        :rtype: bool
         """
         ...
 
@@ -89,7 +99,7 @@ class ConditionEquation(Equation, Condition):
         :type value: BasicType
         """
         if name != "self":
-            raise ValueError(f"other name than {"self"} provided in [set_inside]: {name}")
+            raise ValueError(f"Other name than {"self"} provided in [set_inside]: {name}")
         
         self.set_value(value)
 

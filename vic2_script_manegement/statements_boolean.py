@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from name_statements import NameStatement
-from conditions_statements import Condition
-from scope_statements import Scope
+from vic2_script_types.statements_name import NameStatement
+from vic2_script_types.statements_conditions import Condition
+from vic2_script_types.statements_scope import Scope
 
 
 

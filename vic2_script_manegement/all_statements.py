@@ -1,7 +1,7 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 
-from name_statements import Equation, ListOfEquations
+from vic2_script_types.statements_name import Equation, ListOfEquations
 
 
 

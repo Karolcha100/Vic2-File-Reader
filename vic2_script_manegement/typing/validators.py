@@ -6,7 +6,7 @@ from domains import Domain
 
 
 
-class FieldSchema:
+class TypingValidator:
     """Associates a specific script keyword with its expected literal type and domain.
 
     :param keyword: The script keyword, e.g. ``"militancy"`` or ``"primary_culture"``.

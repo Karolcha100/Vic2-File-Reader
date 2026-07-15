@@ -1,4 +1,4 @@
-from name_statements import Equation, ListOfEquations
+from vic2_script_types.statements_name import Equation, ListOfEquations
 from typing.types_basic import BasicType
 
 
