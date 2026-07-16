@@ -1,13 +1,15 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing.types_basic import BasicType
+from script_node import ScriptNode
 
 
 
 
 
 
-class NameStatement(ABC):
+
+class NameStatement(ScriptNode):
     """
     Any Statement in Vic2 Scrpit Language which have a name.
 
@@ -25,6 +27,10 @@ class NameStatement(ABC):
         :rtype: str
         """
         return self._name
+    
+    @abstractmethod
+    def to_script(self) -> str:
+        ...
     
 
 

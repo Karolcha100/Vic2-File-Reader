@@ -2,14 +2,13 @@ from abc import ABC, abstractmethod
 
 from statements_name import NameStatement
 from typing.types_basic import BasicType, NumericType, StringType
-from script_node import ScriptNode
 
 
 
 
 
 
-class Condition[T: list[Condition[BasicType]] | BasicType](NameStatement, ScriptNode):
+class Condition[T: list[Condition[BasicType]] | BasicType](NameStatement):
     """
     Abstract Condition Statement.
     """
