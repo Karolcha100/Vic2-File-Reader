@@ -1,5 +1,5 @@
-from types_basic import BasicType
-from domains import Domain
+from vic2_script_manegement.typing.types_basic import BasicType
+from vic2_script_manegement.typing.domains import Domain
 
 
 

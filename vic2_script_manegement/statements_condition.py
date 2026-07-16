@@ -1,153 +1,91 @@
 from abc import ABC, abstractmethod
 
-from statements_name import Equation, ListOfEquations
-from typing.types_basic import BasicType
+from statements_name import NameStatement
+from typing.types_basic import BasicType, NumericType, StringType
+from script_node import ScriptNode
 
 
 
 
 
 
-class Condition(ABC):
+class Condition[T: list[Condition[BasicType]] | BasicType](NameStatement, ScriptNode):
     """
     Abstract Condition Statement.
     """
+
+    def __init__(self, name: str, value: T) -> None:
+        super().__init__(name)
+        self._value: T = value
+
+    def set_inside(self, value: T) -> None:
+        """
+        
+        """
+        self._value = value
+
+    @abstractmethod
+    def evaluate(self, checked: T) -> bool:
+        """
+        
+        """
+        ...
+
+    def get_inside(self) -> T:
+        """
+        
+        """
+        return self._value
     
     @abstractmethod
-    def get_inside(self) -> dict[str, BasicType]:
-        """
-        Get value or arguments with corresponding values from Condition.
-
-        If no arguments for Condition, it returns:
-        >>> {"self": value}
-
-        :return: Mapping arguments to values
-        :rtype: dict[str, BasicType]
-        """
+    def to_script(self) -> str:
         ...
-
-    @abstractmethod
-    def set_inside(self, name: str, value: BasicType) -> None:
-        """
-        Set inside value in Condition.
-
-        If no arguments in Condition, name should be:
-        >>> name: str = "self"
-
-        :param name: Name of argument if any in Condition, else `"self"`
-        :type name: str
-
-        :param value: Value to set
-        :type value: BasicType
-        """
-        ...
-
-    @abstractmethod
-    def evaluate(self) -> bool:
-        """
-        Checks if Condition is Met.
-
-        :return: If condition is met.
-        :rtype: bool
-        """
-        ...
+    
 
 
 
-
-class ConditionEquation(Equation, Condition):
+class ConditionWithArguments(Condition[list[Condition[BasicType]]]):
     """
-    Condition in form of Equation.
-
-    In Short: 
-    ```
-    name = value
-    ```
-
-    :param name: Name of Condition
-    :type name: str
-
-    :param value: Value assigned to Condition
-    :type value: BasicType
+    
     """
+
+    def __init__(self, name: str, value: list[Condition[BasicType]]) -> None:
+        super().__init__(name, value)
+
+    def evaluate(self, checked: list[Condition[BasicType]]) -> bool:
+        return sum(
+            [
+                cond_value.evaluate(cond_incoming.get_inside())
+                for cond_value, cond_incoming in zip(self._value, checked)
+            ]
+        ) == len(checked)
+    
+    def to_script(self) -> str:
+        return_str = self._name + " = {\n"
+
+        for cond in self._value:
+            return_str += "\t" + cond.to_script() + "\n"
+
+        return return_str + "}"
+
+
+class ConditionEquation(Condition[BasicType]):
+    """
+    
+    """
+
     def __init__(self, name: str, value: BasicType) -> None:
         super().__init__(name, value)
 
-    def get_inside(self) -> dict[str, BasicType]:
-        """
-        Get value from Condition.
+    def evaluate(self, checked: BasicType) -> bool:
 
-        It returns:
-        >>> {"self": value}
-
-        :return: condition itself mapped to value 
-        :rtype: dict[str, BasicType]
-        """
-        return {"self": self.get_value()}
-    
-    def set_inside(self, name: str, value: BasicType) -> None:
-        """
-        Set inside value in Condition.
-
-        Name should be:
-        >>> name: str = "self"
-
-        :param name: should be always`"self"`
-        :type name: str
-
-        :param value: Value to set
-        :type value: BasicType
-        """
-        if name != "self":
-            raise ValueError(f"Other name than {"self"} provided in [set_inside]: {name}")
+        if isinstance(checked, NumericType):
+            return self._value.get_parsed_value() <= checked.get_parsed_value()
         
-        self.set_value(value)
-
-
-
-
-class ConditionWithArguments(ListOfEquations, Condition):
-    """
-    Condition in form of List of Equations.
-
-    In Short:
-    ```
-    name = {
-        Equation
-        Equation
-        ...
-    }
-    ```
-    
-    :param name: Name of Condition
-    :type name: str
-
-    :param arguments: Equations assigned to Condition
-    :type arguments: list[Equation]
-
-    :raises Not Enough Equations: When number of provided Arguments is below 1
-    """
-    def __init__(self, name: str, arguments: list[Equation]) -> None:
-        super().__init__(name, arguments)
-
-    def get_inside(self) -> dict[str, BasicType]:
-        """
-        Get arguments with corresponding values from Condition.
-
-        :return: Mapping arguments to values
-        :rtype: dict[str, BasicType]
-        """
-        return {equation.get_name(): equation.get_value() for equation in self.get_values()}
-    
-    def set_inside(self, name: str, value: BasicType) -> None:
-        """
-        Set inside value in Condition.
-
-
-        :param name: Name of argument if any in Condition
-        :type name: str
-
-        :param value: Value to set
-        :type value: BasicType
-        """
-        self.set_value(name, value)
+        if isinstance(checked, StringType):
+            return self._value.get_parsed_value() == checked.get_parsed_value()
+        
+        raise ValueError(f"unrecognized type")
+            
+    def to_script(self) -> str:
+        return f"{self._name} = {self._value.get_raw_value()}"

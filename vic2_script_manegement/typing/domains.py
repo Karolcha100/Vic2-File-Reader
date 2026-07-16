@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from registries import Registry
+from vic2_script_manegement.typing.registries import Registry
 
 
 
