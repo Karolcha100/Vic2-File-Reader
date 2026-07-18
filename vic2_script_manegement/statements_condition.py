@@ -37,7 +37,7 @@ class Condition[T: list[Condition[BasicType]] | BasicType](NameStatement):
         return self._value
     
     @abstractmethod
-    def to_script(self) -> str:
+    def to_script(self, depth: int) -> str:
         ...
     
 
@@ -59,13 +59,13 @@ class ConditionWithArguments(Condition[list[Condition[BasicType]]]):
             ]
         ) == len(checked)
     
-    def to_script(self) -> str:
-        return_str = self._name + " = {\n"
+    def to_script(self, depth: int) -> str:
+        return_str = f"{"\t"*depth}{self._name}" + " = {\n"
 
         for cond in self._value:
-            return_str += "\t" + cond.to_script() + "\n"
+            return_str += cond.to_script(depth+1)
 
-        return return_str + "}"
+        return return_str + f"{"\t"*depth}" + "}"
 
 
 class ConditionEquation(Condition[BasicType]):
@@ -86,5 +86,5 @@ class ConditionEquation(Condition[BasicType]):
         
         raise ValueError(f"unrecognized type")
             
-    def to_script(self) -> str:
-        return f"{self._name} = {self._value.get_raw_value()}"
+    def to_script(self, depth: int) -> str:
+        return f"{"\t"*depth}{self._name} = {self._value.get_raw_value()}\n"

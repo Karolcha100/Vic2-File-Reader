@@ -11,7 +11,7 @@ class ScriptNode(ABC):
     """
 
     @abstractmethod
-    def to_script(self) -> str:
+    def to_script(self, depth: int) -> str:
         """
         Serialize this node back into its Victoria 2 script representation.
 
